@@ -1,5 +1,6 @@
 ﻿using Beerhall.Models.Domain;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
@@ -85,10 +86,12 @@ namespace Beerhall.Data {
             string eMailAddress = "beermaster@hogent.be";
             IdentityUser user = new IdentityUser { UserName = eMailAddress, Email = eMailAddress};
             await _userManager.CreateAsync(user, "P@ssword1");
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "admin"));
 
             eMailAddress = "jan@hogent.be";
             user = new IdentityUser  {UserName = eMailAddress, Email = eMailAddress};
             await _userManager.CreateAsync(user, "P@ssword1");
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "customer"));
         }
 
     }
