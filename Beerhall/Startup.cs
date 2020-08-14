@@ -37,6 +37,19 @@ namespace Beerhall {
             services.AddScoped<IBrewerRepository, BrewerRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                //password settings
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+
+                //lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+
+                //User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
