@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Beerhall.Controllers {
+    [Authorize]
     public class BrewerController : Controller {
         private readonly IBrewerRepository _brewerRepository;
         private readonly ILocationRepository _locationRepository;
@@ -15,7 +17,7 @@ namespace Beerhall.Controllers {
             _brewerRepository = brewerRepository;
             _locationRepository = locationRepository;
         }
-
+        [AllowAnonymous]
         public IActionResult Index() {
             IEnumerable<Brewer> brewers = _brewerRepository.GetAll().OrderBy(b => b.Name).ToList();
             ViewData["TotalTurnover"] = brewers.Sum(b => b.Turnover);
